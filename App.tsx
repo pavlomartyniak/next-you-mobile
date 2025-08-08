@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import Navigation from "./src/navigation";
+import { useAppState } from "./src/hooks/useAppState";
 
 export default function App() {
+  const { appState, completeOnboarding, updateUser, logout, clearError } =
+    useAppState();
+
+  if (appState.isLoading) {
+    return null; // You could add a splash screen here
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <>
       <StatusBar style="auto" />
-    </View>
+      <Navigation
+        appState={appState}
+        completeOnboarding={completeOnboarding}
+        updateUser={updateUser}
+        logout={logout}
+        clearError={clearError}
+      />
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
